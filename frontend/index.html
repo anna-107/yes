@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NIITS Selection Questions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f7f7f7;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .logo-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo-container img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #ccc;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select, button, textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 20px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .questions, .answers {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #fafafa;
+    }
+    .error {
+      color: red;
+      margin-top: 5px;
+    }
+    #statusMessage {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Logo Placeholder -->
+    <div class="logo-container">
+      <img src="image.jpg" alt="Logo" />
+    </div>
+
+    <h1>NIITS Selection Form</h1>
+
+    <form id="infoForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" required placeholder="Enter your name" />
+
+      <label for="roll">Roll Number:</label>
+      <input type="text" id="roll" required placeholder="Enter your roll number" />
+
+      <label for="email">Email ID:</label>
+      <input type="email" id="email" required placeholder="Enter your email ID" />
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" required placeholder="Enter your phone number" />
+
+      <label for="roleSelect">Select Your Role:</label>
+      <select id="roleSelect" required>
+        <option value="">--Select Role--</option>
+        <option value="Marketing Manager">Marketing Manager</option>
+        <option value="Membership Coordinator">Membership Coordinator</option>
+        <option value="Research and Development Head">Research and Development Head</option>
+        <option value="Project Manager">Project Manager</option>
+        <option value="Technical Head">Technical Head</option>
+        <option value="Entrepreneur Head">Entrepreneur Head</option>
+      </select>
+      
+      <button type="button" id="getQuestionsBtn">Get Questions</button>
+    </form>
+
+    <div id="qaSection" style="display:none;">
+      <div class="questions">
+        <h2>Questions:</h2>
+        <p id="question1"></p>
+        <textarea id="answer1" rows="6" placeholder="Type your answer here..."></textarea>
+
+        <p id="question2"></p>
+        <textarea id="answer2" rows="6" placeholder="Type your answer here..."></textarea>
+      </div>
+
+      <button type="button" id="submitAnswersBtn">Submit Answers</button>
+      <p id="statusMessage"></p>
+    </div>
+  </div>
+
+  <script>
+  const questionsData = {
+    "Marketing Manager": [
+     "Your college society is launching a new event, but students are not showing interest. What marketing strategies would you use to attract them?",
+     "Create a catchy tagline for a college fest that promotes fun and learning.",
+     "How would you handle a situation where a team member is not contributing to the marketing campaign?",  
+     "Your tech society is hosting a coding bootcamp, but registrations are low. What steps would you take to increase sign-ups? (Write at least 3 strategies.)",  
+     "A team member consistently fails to meet deadlines for marketing tasks. How would you ensure they contribute effectively without affecting the overall campaign?",  
+     "You are tasked with marketing an AI & Machine Learning conference to students who may not be familiar with AI. How will you make the event appealing to a general audience?",  
+     "A well-executed social media campaign goes viral, but some students start spreading negative comments about the event. How will you handle the situation?",  
+     "Name two social media trends that can be used to increase engagement for a college hackathon.",  
+     "Your team wants to use LinkedIn ads to attract sponsors for an event. How would you design an effective ad campaign?",  
+     "What are the benefits of using memes in marketing a tech society’s events?",  
+     "Your tech society is hosting a Cybersecurity Bootcamp, but you have only 24 hours to generate massive awareness—with zero budget. How will you make the event go viral in just one day? \n a. What platforms will you focus on?\n b. How will you create instant buzz without paid promotions? \n c. What type of engaging content will you create?\n d. How will you get people to share and talk about the event?",
+     "Your college bans posters and flyers, so traditional marketing is not an option. How will you creatively promote your upcoming Hackathon using only physical, in-person marketing strategies? \n a. What unique offline tactics will you use?  \nb. How will you spread awareness without digital ads?  \nc. How can you use word-of-mouth marketing effectively?",  
+     "You can only use 10 words to promote an upcoming AI & Robotics Conference—no images, no designs, no hashtags. What 10 words will you choose, and why?",  
+     "A major NIITS event is approaching, but registrations are lower than expected. What immediate strategies would you implement to boost participation?",  
+     "How would you leverage social media to build a strong brand identity for NIITS and maintain high engagement levels?",  
+     "If public perception about a NIITS initiative turns negative due to misinformation, how would you manage and restore the reputation?",  
+     "You need to promote an NIITS event with zero budget. What creative approaches would you use to achieve maximum outreach?",  
+     "How would you develop a content strategy that consistently highlights NIITS's impact and achievements to the community?",  
+     "A new division within NIITS is struggling to gain visibility. How would you craft a campaign to establish its presence effectively?",  
+     "If you are tasked with increasing engagement among NIITS alumni for future collaborations, what strategies would you implement?"
+      ],
+      "Membership Coordinator": [
+        
+"Design a system to efficiently manage and track incoming applications while minimizing the risk of errors or delays. How would you implement quality checks?",  
+"If multiple candidates apply for the same position, what criteria would you use to prioritize applications and ensure fairness?",  
+"Propose a plan for ensuring that the onboarding of new members happens within the defined timeline. What are the key milestones?",  
+"In the case of a sudden exit, how would you manage the transition to ensure that the vacancy is filled without operational disruptions?",  
+"Outline a process to ensure smooth handover of responsibilities when a member exits. How would you prevent gaps in information transfer?",  
+"What strategies would you use to maintain comprehensive membership records while ensuring compliance with data privacy policies?",  
+"Describe how you would design a membership log that tracks application progress, onboarding milestones, and exit details efficiently.",  
+"Propose a system for regularly auditing membership records. How would you identify and rectify inconsistencies?",  
+"Outline a protocol for securing sensitive membership data and preventing unauthorized access to confidential records.",  
+"How would you ensure that record-keeping processes align with NIITS's constitutional guidelines while also meeting legal compliance standards?",  
+"In the event of an unexpected influx of membership applications, what immediate measures would you take to manage the workload while maintaining evaluation quality?",  
+"If discrepancies in membership data are identified after key decisions have been made, how would you manage the correction process while maintaining transparency?",  
+"How would you establish a fallback plan to prevent operational disruptions in case of a membership system failure?",  
+"Describe your approach to handling a situation where a high-profile applicant fails to meet a minor membership criterion but is otherwise qualified.",  
+"What steps would you take to manage conflicts arising from inconsistencies in membership records?",  
+"Identify an area in the current membership management process that could benefit from automation. Propose an actionable plan for integrating that automation effectively.",  
+"Describe how you would use technology to streamline membership record-keeping while minimizing errors and maximizing data security.",  
+"What key performance indicators (KPIs) would you track to measure the effectiveness of membership management processes?",  
+"Propose an innovative change that could significantly enhance the efficiency of membership transitions. How would you ensure its successful implementation?",  
+"Outline a feedback mechanism to continuously improve membership processes by gathering input from both new and exiting members."
+  ],
+      "Research and Development Head": [
+
+"Propose a long-term R&D strategy that aligns with NIITS's core objectives. How would you ensure that the strategy stays relevant as technology evolves?",  
+"How would you identify and prioritize high-impact research areas that align with NIITS’s vision?",  
+"Describe a scenario where you had to pivot an ongoing research project due to changing technological trends. How did you handle it?",  
+"If tasked with launching a new research initiative under a tight deadline, how would you balance speed with quality?",  
+"Outline your approach to incorporating feedback from multiple stakeholders to refine research strategies.",  
+"How would you establish key performance indicators (KPIs) to track the progress and effectiveness of ongoing R&D projects?",  
+"Describe your strategy for managing multiple research teams simultaneously while ensuring each team meets its deliverables.",  
+"Propose a system to ensure that R&D projects stay within scope, budget, and timeline without compromising quality.",  
+"What steps would you take if a high-priority R&D project encountered unforeseen challenges that threatened deadlines?",  
+"How would you ensure seamless collaboration between R&D teams and other divisions to drive cross-functional innovation?",  
+"Outline a process for identifying and mitigating risks in high-stakes R&D projects. How would you implement safeguards?",  
+"Describe how you would ensure that all research conducted under NIITS adheres to ethical standards and constitutional guidelines.",  
+"What protocols would you implement to prevent data leakage or intellectual property theft in ongoing research projects?",  
+"In the event of a security breach during a research project, how would you contain the damage and ensure compliance with data protection laws?",  
+"How would you establish a system to regularly audit research processes and identify potential compliance gaps?",  
+"Design a framework to document research findings in a structured and easily retrievable format. How would you ensure version control?",  
+"What methodology would you use to evaluate the success of R&D initiatives and incorporate lessons learned into future projects?",  
+"Propose a system to archive and secure research data while ensuring easy access for authorized personnel.",  
+"Describe how you would present research outcomes to the Council in a way that highlights both strategic impact and technical depth.",  
+"What steps would you take to ensure that all research documentation is aligned with NIITS’s long-term vision and policies?" 
+],
+      "Project Manager": [
+
+"Outline your approach to defining project scope and technical requirements for a large-scale software project. How would you prevent scope creep?",  
+"How would you create a timeline for a project with multiple interdependent modules? Describe your strategy for tracking progress.",  
+"Describe a situation where you had to reallocate resources mid-project. How did you manage timelines and prevent delays?",  
+"Propose a strategy to handle unforeseen technical challenges that arise during a project’s execution phase.",  
+"If a project is running behind schedule, what immediate corrective actions would you take to bring it back on track?",  
+"How would you ensure seamless communication between development, QA, and deployment teams during high-stakes projects?",  
+"Describe a situation where you resolved a conflict between team members with conflicting technical approaches. What was your resolution strategy?",  
+"How would you manage distributed teams working on different modules of the same project to ensure timely delivery?",  
+"What process would you establish to ensure that developers and testers remain aligned on project objectives?",  
+"Explain your approach to ensuring that technical resources are utilized optimally without causing team burnout.",  
+"Outline a quality assurance plan that ensures consistent performance and reliability in software releases.",  
+"How would you handle a situation where the QA team identifies critical bugs close to the project deadline?",  
+"Describe your methodology for conducting risk assessments at different phases of a software project.",  
+"What steps would you take if a critical technical dependency unexpectedly became unavailable mid-project?",  
+"How would you create and enforce a post-launch monitoring strategy to catch and resolve issues early?",  
+"Propose a system to document project workflows, technical specifications, and progress reports effectively.",  
+"How would you set up a version control and change management process to prevent inconsistencies in project code?",  
+"What documentation standards would you establish to ensure that all project records remain accessible and up to date?",  
+"Describe how you would analyze post-project feedback to identify areas for process improvement.",  
+"Explain how you would document technical challenges and solutions encountered during a project to build organizational knowledge.",  
+],
+      "Technical Head": [
+
+"Your college society is launching a new event, but students are not showing interest. What marketing strategies would you use to attract them?",  
+"Create a catchy tagline for a college fest that promotes fun and learning.",  
+"How would you handle a situation where a team member is not contributing to the marketing campaign?",  
+"Your tech society is hosting a coding bootcamp, but registrations are low. What steps would you take to increase sign-ups? (Write at least 3 strategies.)",  
+"A team member consistently fails to meet deadlines for marketing tasks. How would you ensure they contribute effectively without affecting the overall campaign?",  
+"You are tasked with marketing an AI & Machine Learning conference to students who may not be familiar with AI. How will you make the event appealing to a general audience?",  
+"A well-executed social media campaign goes viral, but some students start spreading negative comments about the event. How will you handle the situation?",  
+"Name two social media trends that can be used to increase engagement for a college hackathon.",  
+"Your team wants to use LinkedIn ads to attract sponsors for an event. How would you design an effective ad campaign?",  
+"What are the benefits of using memes in marketing a tech society’s events?",  
+"Your tech society is hosting a Cybersecurity Bootcamp, but you have only 24 hours to generate massive awareness—with zero budget. How will you make the event go viral in just one day? \na.What platforms will you focus on?\nb.How will you create instant buzz without paid promotions?\nc.What type of engaging content will you create?\nd.How will you get people to share and talk about the event?\nYour college bans posters and flyers, so traditional marketing is not an option. How will you creatively promote your upcoming Hackathon using only physical, in-person marketing strategies?\na.What unique offline tactics will you use?\nb.How will you spread awareness without digital ads?\nc.How can you use word-of-mouth marketing effectively?",  
+"You can only use 10 words to promote an upcoming AI & Robotics Conference—no images, no designs, no hashtags. What 10 words will you choose, and why?",  
+"A major NIITS event is approaching, but registrations are lower than expected. What immediate strategies would you implement to boost participation?",  
+"How would you leverage social media to build a strong brand identity for NIITS and maintain high engagement levels?",  
+"If public perception about a NIITS initiative turns negative due to misinformation, how would you manage and restore the reputation?",  
+"You need to promote an NIITS event with zero budget. What creative approaches would you use to achieve maximum outreach?",  
+"How would you develop a content strategy that consistently highlights NIITS's impact and achievements to the community?",  
+"A new division within NIITS is struggling to gain visibility. How would you craft a campaign to establish its presence effectively?",  
+"If you’re tasked with increasing engagement among NIITS alumni for future collaborations, what strategies would you implement?",  
+],
+      "Entrepreneur Head": [
+        "You are tasked with organizing an innovation challenge to identify promising startup ideas. What criteria would you use to evaluate the ideas, and how would you ensure unbiased assessment?",  
+"A student presents an idea that is highly innovative but lacks market feasibility. How would you guide the student to refine the concept or pivot effectively?",  
+"Describe your strategy for identifying the top 5 startup ideas from a pool of 100 submissions, ensuring scalability and alignment with market trends.",  
+"During an evaluation, you notice that a technically brilliant idea lacks a clear business model. How would you address this challenge?",  
+"A team with a viable idea struggles to articulate their vision effectively. How would you mentor them to develop a compelling pitch for investors?",  
+"You’ve secured spots for NIITS teams in a high-profile hackathon. How would you ensure that participants are well-prepared and perform at their best?",  
+"A NIITS team wins a hackathon but fails to capitalize on the momentum post-event. How would you prevent such missed opportunities in the future?",  
+"If two high-potential teams apply for the same hackathon with similar ideas, how would you decide which team gets the slot?",  
+"You discover that a hackathon organizer has limited slots for NIITS participants. What negotiation strategies would you employ to secure additional spots?",  
+"After a hackathon, one team’s project shows potential but lacks scalability. How would you guide them to refine and scale their solution?",  
+"A promising startup from NIITS struggles to secure funding due to lack of investor connections. How would you bridge this gap?",  
+"Describe your approach to building an incubation cell within NIITS that fosters startup growth and innovation.",  
+"You’re tasked with securing grants for NIITS-incubated startups. How would you identify relevant funding opportunities and ensure successful applications?",  
+"A startup faces difficulties meeting incubation milestones. How would you intervene to ensure that progress stays on track?",  
+"An investor expresses interest in funding a NIITS startup but proposes terms that may compromise long-term growth. How would you navigate this negotiation?",  
+"You need to build a mentorship pool for aspiring entrepreneurs. What criteria would you use to select mentors, and how would you ensure consistent value delivery?",  
+"Describe a mentorship framework that balances hands-on guidance with encouraging independent problem-solving among startup founders.",  
+"A startup founder is hesitant to seek legal advice due to financial constraints. How would you provide cost-effective legal and financial advisory support?",  
+"If a founder lacks leadership skills but has a promising idea, how would you design a mentorship plan to cultivate their leadership abilities?",  
+"A startup faces a critical IP protection challenge. What immediate and long-term steps would you take to safeguard their intellectual property?"
+]  };
+
+  let selectedQuestions = {};
+
+  // Function to validate email
+  function validateEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
+  // Function to validate phone number
+  function validatePhoneNumber(phone) {
+    const phoneRegex = /^\d{10}$/; // Allows only 10-digit numbers
+    return phoneRegex.test(phone);
+  }
+
+  document.getElementById('getQuestionsBtn').addEventListener('click', function () {
+    const name = document.getElementById('name').value.trim();
+    const roll = document.getElementById('roll').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const role = document.getElementById('roleSelect').value;
+
+    // Validate all fields
+    if (!name || !roll || !email || !phone || !role) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Validate email
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // Validate phone number
+    if (!validatePhoneNumber(phone)) {
+      alert("Please enter a valid 10-digit phone number.");
+      return;
+    }
+
+    if (!questionsData[role]) {
+      alert("Questions for the selected role are not available.");
+      return;
+    }
+
+    const questionsArray = questionsData[role];
+    selectedQuestions = {
+      question1: questionsArray[0],
+      question2: questionsArray[1]
+    };
+
+    document.getElementById('question1').textContent = selectedQuestions.question1;
+    document.getElementById('question2').textContent = selectedQuestions.question2;
+    document.getElementById('qaSection').style.display = 'block';
+  });
+
+  document.getElementById('submitAnswersBtn').addEventListener('click', function () {
+    const name = document.getElementById('name').value.trim();
+    const roll = document.getElementById('roll').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const role = document.getElementById('roleSelect').value;
+    const answer1 = document.getElementById('answer1').value.trim();
+    const answer2 = document.getElementById('answer2').value.trim();
+
+    // Validate all fields
+    if (!name || !roll || !email || !phone || !role || !answer1 || !answer2) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Validate email
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email address.");
+      return;
+    }
+
+    // Validate phone number
+    if (!validatePhoneNumber(phone)) {
+      alert("Please enter a valid 10-digit phone number.");
+      return;
+    }
+
+    const submissionData = {
+      name,
+      roll,
+      email,
+      phone,
+      role,
+      question1: selectedQuestions.question1,
+      answer1,
+      question2: selectedQuestions.question2,
+      answer2
+    };
+
+    document.getElementById('statusMessage').textContent = "Submitting...";
+      fetch("https://your-backend-name.onrender.com/submit", { // Replace with your Render backend URL
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(submissionData)
+      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.success) {
+            alert("Your responses have been submitted successfully!");
+            document.getElementById('infoForm').reset();
+            document.getElementById('qaSection').style.display = 'none';
+          } else {
+            alert("Submission failed: " + res.message);
+          }
+          document.getElementById('statusMessage').textContent = res.message;
+        })
+        .catch(error => {
+          console.error("Error submitting responses:", error);
+          document.getElementById('statusMessage').textContent = "Error submitting response.";
+        });
+  });
+
+  </script>
+</body>
+</html>
